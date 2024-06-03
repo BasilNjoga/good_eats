@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:good_eats/models/menu_item_response.dart';
+import 'package:good_eats/models/product.dart';
 import 'package:good_eats/ui/cart.dart';
 import 'package:good_eats/ui/widgets/app_dialogue.dart';
 import 'package:good_eats/util/colors.dart';

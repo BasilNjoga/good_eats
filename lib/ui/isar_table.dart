@@ -3,6 +3,7 @@ import 'package:good_eats/apiservice.dart';
 import 'package:good_eats/models/menu_database.dart';
 import 'package:good_eats/models/menu.dart';
 import 'package:good_eats/models/menu_item_response.dart';
+import 'package:good_eats/models/product.dart';
 
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ class _FoodTablePageState extends State<FoodTablePage> {
     setState(() {
       // Your state update logic
       mymenuItems = response.menuItems;//(response.menuItems as List).map((e) => Food.fromJson(e)).toList();
+      //context.read<MenuDatabase>().addMenu(mymenuItems[0]);
     });
     devtools.log(mymenuItems.toString());
   }).catchError((error) {
@@ -81,7 +83,7 @@ class _FoodTablePageState extends State<FoodTablePage> {
   Widget build(BuildContext context) {
     final menuDatabase = context.watch<MenuDatabase>();
 
-    List<Menu> currentMenu = menuDatabase.currentMenu;
+    //List<Menu> currentMenu = menuDatabase.currentMenu;
     
     return Scaffold(
       appBar: AppBar(title: const Text("Menu"),),
@@ -93,12 +95,12 @@ class _FoodTablePageState extends State<FoodTablePage> {
         Container(
           height: 400,
           child: ListView.builder(
-          itemCount: currentMenu.length,
+          //itemCount: currentMenu.length,
           itemBuilder: (context, index) {
-          final note = currentMenu[index];
+          //final note = currentMenu[index];
           
           return ListTile(
-            title: Text(note.title)
+            //title: Text(note.title)
           );
                 }),
         )

@@ -4,6 +4,7 @@ import 'package:good_eats/apiservice.dart';
 import 'dart:developer' as devtools;
 
 import 'package:good_eats/models/menu_item_response.dart';
+import 'package:good_eats/models/product.dart';
 
 class FoodItemsPage extends StatefulWidget {
   static const routeName = "fooditems";
