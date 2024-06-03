@@ -13,9 +13,6 @@ class CartAppBar extends StatefulWidget {
 
   const CartAppBar({super.key, required this.inHomePage, required this.title});
 
-
-
-  
   @override
   _CartAppBarState createState() => _CartAppBarState();
 }
@@ -39,18 +36,38 @@ class _CartAppBarState extends State<CartAppBar> {
   }
 
   void _checkoutOnClick() {
-    print('Go to checkout here!');
+    final cart = Provider.of<Cart>(context, listen: false);
+    cart.emptyCart();
+    _cartOnClick();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Thank you!"),
+          content: const Text("Thank you for shopping with us."),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget buildButton() {
     Widget homeBtn = IconButton(
-      icon: Icon(Icons.arrow_back, color: AppColors.appWhite),
+      icon: const Icon(Icons.arrow_back, color: AppColors.appWhite),
       onPressed: () => _categoryOnClick(context),
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 15.0),
     );
     Widget deleteBtn = IconButton(
-      icon: Icon(Icons.delete_outline, color: AppColors.appWhite),
+      icon: const Icon(Icons.delete_outline, color: AppColors.appWhite),
       onPressed: () => _deleteOnClick(),
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 15.0),
@@ -88,20 +105,18 @@ class _CartAppBarState extends State<CartAppBar> {
         dragStart = d.globalPosition.dy;
       },
       onVerticalDragUpdate: (d) {
-        if (dragStart != null) {
-          if (d.globalPosition.dy > dragStart + 100) {
-            setState(() => showCart = true);
-          } else if ((d.globalPosition.dy < dragStart - 100)) {
-            setState(() => showCart = false);
-          }
+        if (d.globalPosition.dy > dragStart + 100) {
+          setState(() => showCart = true);
+        } else if ((d.globalPosition.dy < dragStart - 100)) {
+          setState(() => showCart = false);
         }
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOut,
         height: showCart == true ? screenHeight * 0.85 : 56 + statusbar,
-        decoration: BoxDecoration(
-          color: AppColors.appBlue1,
+        decoration: const BoxDecoration(
+          color: Colors.black, //AppColors.appBrown,
           boxShadow: [
             BoxShadow(
               color: AppColors.appBlack,
@@ -114,7 +129,7 @@ class _CartAppBarState extends State<CartAppBar> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
+            SizedBox(
               height: appBarHeight + statusbar,
               child: Padding(
                 padding: EdgeInsets.only(top: statusbar),
@@ -142,12 +157,13 @@ class _CartAppBarState extends State<CartAppBar> {
                   children: <Widget>[
                     Expanded(
                       child: ListView(
-                        children:
-                            List.generate(cart.uniqueProducts.length, (index) {
+                        children: List.generate(cart.uniqueProducts.length,
+                            (index) {
                           final product = cart.uniqueProducts[index];
                           return Observer(
                             builder: (_) {
-                              final quantity = cart.getProductQuantity(product);
+                              final quantity =
+                                  cart.getProductQuantity(product);
                               if (quantity > 0) {
                                 return CartListTile(
                                   product: product,
@@ -171,30 +187,30 @@ class _CartAppBarState extends State<CartAppBar> {
                               Observer(builder: (_) {
                                 return Row(
                                   children: <Widget>[
-                                    const Text( ""
-                                      //"\$${cart.cartValue}",
-                                      //style: AppFonts.cartValue(),
-                                    ),
+                                    const Text(""
+                                        //"\$${cart.cartValue}",
+                                        //style: AppFonts.cartValue(),
+                                        ),
                                     if (cart.freight != 0)
                                       Text(
-                                        " + \$${cart.freight}",
+                                        "+ \$${cart.freight}",
                                         style: AppFonts.cartValue(),
                                       ),
                                   ],
                                 );
                               }),
-                              ElevatedButton(                                
+                              ElevatedButton(
                                 onPressed: () => _checkoutOnClick(),
                                 child: Container(
                                   child: Row(
                                     children: <Widget>[
-                                      Icon(
+                                      const Icon(
                                         Icons.payment,
                                         color: AppColors.appBlue2,
                                       ),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Text(
-                                        'Go to checkout',
+                                        'Checkout',
                                         style: AppFonts.cartCheckOutBtn(),
                                       )
                                     ],

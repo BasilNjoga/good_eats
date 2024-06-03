@@ -33,7 +33,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         height: 250,
         child: Row(
@@ -60,15 +60,15 @@ class CategoryCard extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15),
-                    child: Container(
+                    child: SizedBox(
                       width: 200,
-                      child: ElevatedButton(
-                        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                        //color: color,
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                        color: color,
                         onPressed: () => navigateToProducts(context: context, category: category),
                         child: Row(
                           children: <Widget>[
-                            Icon(
+                            const Icon(
                               Icons.apps,
                               color: AppColors.appWhite,
                             ),
@@ -88,7 +88,7 @@ class CategoryCard extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: color,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(3),
                     bottomRight: Radius.circular(3),
                     topLeft: Radius.circular(35),

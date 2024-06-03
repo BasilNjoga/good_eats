@@ -1,24 +1,5 @@
-// import 'package:flutter/material.dart';
-// import 'package:good_eats/models/product.dart';
-// import 'package:good_eats/ui/cart.dart';
-// import 'package:provider/provider.dart';
-
-// class ProductCard extends StatelessWidget {
-//   final Product product;
-//   const ProductCard({super.key, required this.product});
-
-//   void _addToCartOnClick(BuildContext context) {
-//     final cart = Provider.of<Cart>(context, listen: false);
-//     cart.addToCart(product);
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
 
 import 'package:flutter/material.dart';
-import 'package:good_eats/models/menu_item_response.dart';
 import 'package:good_eats/models/product.dart';
 import 'package:good_eats/ui/cart.dart';
 import 'package:good_eats/util/colors.dart';
@@ -87,7 +68,7 @@ class ProductCard extends StatelessWidget {
                 //     style: AppFonts.productCardPrice()),
                 MaterialButton(
                   onPressed: () => _addToCartOnClick(context),
-                  color: AppColors.appBlue1,
+                  color: AppColors.appBrown,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   child: Row(

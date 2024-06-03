@@ -1,86 +1,77 @@
-// import 'package:flutter/material.dart';
-
-// class HomeScreen extends StatefulWidget {
-//   static const routeName = "home-screen";
-//   const HomeScreen({super.key});
-
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: const Column(children: [
-//         Text("good eats")
-//       ],)
-//     );
-//   }
-// } 
 import 'package:flutter/material.dart';
-import 'package:good_eats/ui/food_items_page.dart';
-import 'package:good_eats/ui/isar_table.dart';
-import 'package:good_eats/ui/widgets/cart_app_bar.dart';
-import 'package:good_eats/ui/widgets/category_card.dart';
-import 'package:good_eats/util/app_variables.dart';
+import 'package:good_eats/ui/orders_screen.dart';
+import 'package:good_eats/ui/profile_screen.dart';
+import 'package:good_eats/ui/welcome_screen.dart';
 import 'package:good_eats/util/colors.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = "routeName";
+  static const routeName = "homescreen";
+  const HomeScreen({super.key});
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  final PageController _pageController = PageController(initialPage: 0);
+  List<Map> menuIcons = [
+     {'icon': Icons.home, 'label': 'Home'},
+    {'icon': Icons.event, 'label': 'Orders'},
+    {'icon': Icons.account_circle_rounded, 'label': 'Profile'}
+  ];
+
+  @override
+  void initState() {
+    //_pageController = PageController(initialPage: _currentIndex);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    double statusbar = MediaQuery.of(context).padding.top;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 400,
-              color: AppColors.appGray1,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 56 + statusbar),
-                    child: ListView(
-                      padding: EdgeInsets.only(top: 10),
-                      children: <Widget>[
-                        // CategoryCard(
-                        //     title: 'Games',
-                        //     text: 'Diverse library of games for all platforms.',
-                        //     color: AppColors.appBlue1,
-                        //     iconData: Icons.gamepad,
-                        //     category: Category.Games),
-                        CategoryCard(
-                            title: 'Food',
-                            text: 'We have food for any occasion.',
-                            color: AppColors.appGreen,
-                            iconData: Icons.fastfood,
-                            category: Category.Food),
-                      ],
-                    ),
-                  ),
-                  const CartAppBar(
-                    title: 'State Management',
-                    inHomePage: true,
-                  ),
-                ],
-              ),
-            ),
+    
+      body: Column(
+        children: [ 
+           Expanded(
+            child: 
+          PageView(
+            controller: _pageController,
+            children: const [
+             WelcomeScreen(),
+             OrdersScreen(),
+             ProfileScreen()
+            ],
+            onPageChanged: (int index) {
+              setState(() {
+                _pageController.jumpToPage(index);
+                _currentIndex = index;
+              });
+            }
+          )
+          )
         
-            MaterialButton(
-              color: Colors.brown,
-              onPressed: () {
-                Navigator.pushNamed(context, FoodTablePage.routeName);
-            }, child: const Text("All Meals"))
-          ],
-        ),
+        ],
+      ),
+     // resizeToAvoidBottomInset: true,
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: true,
+       currentIndex: _currentIndex,
+      selectedIconTheme: const IconThemeData(color: AppColors.appBrown),
+      selectedItemColor: AppColors.appBrown,
+      unselectedItemColor : Colors.black,
+        onTap: (index) {
+          setState(() {
+            _pageController.jumpToPage(index);
+           _currentIndex = index;
+          });
+        },
+        items: List.generate(menuIcons.length, (index) {
+          return BottomNavigationBarItem(
+            icon: Icon(menuIcons[index]['icon']),
+            label: menuIcons[index]['label'],
+            );
+        }),
       ),
     );
   }

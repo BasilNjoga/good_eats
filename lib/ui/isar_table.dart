@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:good_eats/apiservice.dart';
-import 'package:good_eats/models/menu_database.dart';
-import 'package:good_eats/models/menu.dart';
-import 'package:good_eats/models/menu_item_response.dart';
+import 'package:good_eats/menu_database.dart';
 import 'package:good_eats/models/product.dart';
-
 import 'package:provider/provider.dart';
-
 import 'dart:developer' as devtools;
 
 class FoodTablePage extends StatefulWidget {
@@ -24,89 +20,75 @@ class _FoodTablePageState extends State<FoodTablePage> {
   @override
   void initState() {
     super.initState();
-
-    APIService.getFoodItems().then((response){
-    setState(() {
-      // Your state update logic
-      mymenuItems = response.menuItems;//(response.menuItems as List).map((e) => Food.fromJson(e)).toList();
-      //context.read<MenuDatabase>().addMenu(mymenuItems[0]);
-    });
-    devtools.log(mymenuItems.toString());
-  }).catchError((error) {
-    devtools.log('Error: $error');
-  });
-
-    readMenu();
-    number();
+    initializeMenu();
   }
-   // create a note
 
-   void createNote() {
-    // showDialog(
-    //   context: context, 
-    //   builder: (context) => AlertDialog(
-    //   content: TextField(
-    //     controller: textController,
-    //   ),
-    //   actions: [
-    //     MaterialButton(
-    //       onPressed: () {
-    //         context.read<MenuDatabase>().addMenu(textController.text);
-    //         textController.clear();
+  Future<void> initializeMenu() async {
+    final menuDatabase = context.read<MenuDatabase>();
+    final count = await menuDatabase.countValues();
 
-    //         // pop dialoge
-    //         Navigator.pop(context);
-    //       },
-    //       child: const Text("Create"),)
-    //   ],
-    // ),
-    // );
-   }
-   // add notes
-   void readMenu() {
+    if (count == 0) {
+      // If database is empty, fetch data from API and add to the database
+      try {
+        final response = await APIService.getFoodItems();
+        mymenuItems = response.menuItems;
+
+        for (var item in mymenuItems) {
+          await menuDatabase.addMenu(item);
+        }
+
+        devtools.log('Data fetched from API and added to the database.');
+      } catch (error) {
+        devtools.log('Error fetching data from API: $error');
+      }
+    } else {
+      // If database is not empty, read data from the database
+      await menuDatabase.fetchMenu();
+      devtools.log('Data fetched from the local database.');
+    }
+  }
+
+  void createNote() {
+    // Show dialog to create a new menu item
+  }
+
+  void readMenu() {
     context.read<MenuDatabase>().fetchMenu();
-   }
+  }
 
-   Future<int> number() {
-    var count = context.read<MenuDatabase>().countValues();
+  Future<int> number() async {
+    final count = await context.read<MenuDatabase>().countValues();
     devtools.log(count.toString());
     return count;
-   }
+  }
 
-   // check if empty
-  
-
-   // update notes
-
-   // delete notes
   @override
   Widget build(BuildContext context) {
     final menuDatabase = context.watch<MenuDatabase>();
+    List<Product> currentMenu = menuDatabase.currentMenu;
 
-    //List<Menu> currentMenu = menuDatabase.currentMenu;
-    
     return Scaffold(
-      appBar: AppBar(title: const Text("Menu"),),
-      floatingActionButton: FloatingActionButton(
-        onPressed: createNote),
-      body: 
-      Column(children: [ 
-        const Text("Hello world"),
-        Container(
-          height: 400,
-          child: ListView.builder(
-          //itemCount: currentMenu.length,
-          itemBuilder: (context, index) {
-          //final note = currentMenu[index];
-          
-          return ListTile(
-            //title: Text(note.title)
-          );
-                }),
-        )
-      ],)
-      
-
+      appBar: AppBar(
+        title: const Text("Menu"),
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: createNote),
+      body: Column(
+        children: [
+          const Text("Hello world"),
+          Container(
+            height: 400,
+            child: ListView.builder(
+              itemCount: currentMenu.length,
+              itemBuilder: (context, index) {
+                final product = currentMenu[index];
+                return ListTile(
+                  title: Text(product.title),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
