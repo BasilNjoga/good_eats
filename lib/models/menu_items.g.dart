@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'menu_items.dart';
+part of 'menu.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator

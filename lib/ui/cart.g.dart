@@ -9,11 +9,11 @@ part of 'cart.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Cart on _Cart, Store {
-  Computed<List<Product>>? _$uniqueProductsComputed;
+  Computed<List<InvalidType>>? _$uniqueProductsComputed;
 
   @override
-  List<Product> get uniqueProducts => (_$uniqueProductsComputed ??=
-          Computed<List<Product>>(() => super.uniqueProducts,
+  List<InvalidType> get uniqueProducts => (_$uniqueProductsComputed ??=
+          Computed<List<InvalidType>>(() => super.uniqueProducts,
               name: '_Cart.uniqueProducts'))
       .value;
   Computed<double>? _$cartValueComputed;
@@ -27,13 +27,13 @@ mixin _$Cart on _Cart, Store {
       Atom(name: '_Cart._cartContent', context: context);
 
   @override
-  ObservableList<Product> get _cartContent {
+  ObservableList<InvalidType> get _cartContent {
     _$_cartContentAtom.reportRead();
     return super._cartContent;
   }
 
   @override
-  set _cartContent(ObservableList<Product> value) {
+  set _cartContent(ObservableList<InvalidType> value) {
     _$_cartContentAtom.reportWrite(value, super._cartContent, () {
       super._cartContent = value;
     });
@@ -58,7 +58,7 @@ mixin _$Cart on _Cart, Store {
       ActionController(name: '_Cart', context: context);
 
   @override
-  void addToCart(Product product) {
+  void addToCart(InvalidType product) {
     final _$actionInfo =
         _$_CartActionController.startAction(name: '_Cart.addToCart');
     try {
@@ -80,7 +80,7 @@ mixin _$Cart on _Cart, Store {
   }
 
   @override
-  void removeProduct(Product product) {
+  void removeProduct(InvalidType product) {
     final _$actionInfo =
         _$_CartActionController.startAction(name: '_Cart.removeProduct');
     try {
@@ -91,7 +91,7 @@ mixin _$Cart on _Cart, Store {
   }
 
   @override
-  void changeQuantity(Product product, int quantity) {
+  void changeQuantity(InvalidType product, int quantity) {
     final _$actionInfo =
         _$_CartActionController.startAction(name: '_Cart.changeQuantity');
     try {
@@ -102,7 +102,7 @@ mixin _$Cart on _Cart, Store {
   }
 
   @override
-  void removeAllFromCart(Product product) {
+  void removeAllFromCart(InvalidType product) {
     final _$actionInfo =
         _$_CartActionController.startAction(name: '_Cart.removeAllFromCart');
     try {

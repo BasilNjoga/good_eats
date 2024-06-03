@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:good_eats/ui/food_items_page.dart';
 import 'package:good_eats/ui/home_screen.dart';
+import 'package:good_eats/ui/isar_table.dart';
 
 
 Route? getRoute(RouteSettings settings, ) {
@@ -12,6 +13,9 @@ Route? getRoute(RouteSettings settings, ) {
       break;
     case FoodItemsPage.routeName:
       screen = const FoodItemsPage();
+      break;
+    case FoodTablePage.routeName:
+      screen = const FoodTablePage();
       break;
     default:
       screen = HomeScreen();

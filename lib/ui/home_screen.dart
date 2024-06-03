@@ -21,6 +21,7 @@
 // } 
 import 'package:flutter/material.dart';
 import 'package:good_eats/ui/food_items_page.dart';
+import 'package:good_eats/ui/isar_table.dart';
 import 'package:good_eats/ui/widgets/cart_app_bar.dart';
 import 'package:good_eats/ui/widgets/category_card.dart';
 import 'package:good_eats/util/app_variables.dart';
@@ -74,9 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
         
             MaterialButton(
-              color: Colors.black,
+              color: Colors.brown,
               onPressed: () {
-                Navigator.pushNamed(context, FoodItemsPage.routeName);
+                Navigator.pushNamed(context, FoodTablePage.routeName);
             }, child: const Text("All Meals"))
           ],
         ),

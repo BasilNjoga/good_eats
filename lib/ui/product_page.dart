@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:good_eats/apiservice.dart';
-import 'package:good_eats/models/menu_items.dart';
+import 'package:good_eats/models/menu_item_response.dart';
 import 'package:good_eats/models/product.dart';
-import 'package:good_eats/models/product_range.dart';
 import 'package:good_eats/ui/widgets/cart_app_bar.dart';
 import 'package:good_eats/ui/widgets/product_cart.dart';
 import 'package:good_eats/util/app_variables.dart';
@@ -57,20 +56,19 @@ class _ProductPageState extends State<ProductPage> {
   List<Product> mymenuItems = [];
   Product? menuItem;
 
-  @override 
-  void initState() {
-    APIService.getFoodItems().then((response){
-      //devtools.log(response.menuItems[0].image.toString());
-      setState(() {
-        mymenuItems[0] = response.menuItems[0];
-        //mymenuItems = (response.menuItems as List).map((e) => MenuItems.fromJson(e)).toList();
-      });
-
-      devtools.log(menuItem.toString());
+@override
+void initState() {
+  super.initState();
+APIService.getFoodItems().then((response){
+    setState(() {
+      // Your state update logic
+      mymenuItems = response.menuItems;//(response.menuItems as List).map((e) => Food.fromJson(e)).toList();
     });
-    
-    super.initState();
-  }
+    devtools.log(mymenuItems.toString());
+  }).catchError((error) {
+    devtools.log('Error: $error');
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +82,9 @@ class _ProductPageState extends State<ProductPage> {
             Container(
               margin: EdgeInsets.only(top: 56 + statusbar),
               child: GridView.count(
-                childAspectRatio: (1 / 1.26),
+                childAspectRatio: 1.4,//(1 / 1.26),
                 padding: const EdgeInsets.only(top: 10),
-                crossAxisCount: 16,
+                crossAxisCount: 1,
                 children: List.generate(mymenuItems.length, (index) {
                   final product = mymenuItems[index];
                   return ProductCard(product: product);

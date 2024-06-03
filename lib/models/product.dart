@@ -1,41 +1,33 @@
+import 'package:isar/isar.dart';
 
+part 'product.g.dart';
+
+@Collection()
 class Product {
-
-  int id;
+  Id id;
   String title;
   String image;
+  String imageType;
   String restaurantChain;
+  //final Servings servings;
 
-  
-  Product({
+  Product ({
     required this.id,
     required this.title,
     required this.image,
+    required this.imageType,
     required this.restaurantChain,
-
+    //required this.servings,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json["id"],
-      title: json["title"],
-      image: json["image"],
-      restaurantChain: json["restaurantChain"]
-      );
+      id: json['id'],
+      title: json['title'],
+      image: json['image'],
+      imageType: json['imageType'],
+      restaurantChain: json['restaurantChain'],
+      //servings: Servings.fromJson(json['servings']),
+    );
   }
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': title,
-      'title': image,
-      'restaurantChain': restaurantChain,
-    };
-  }
-
-
-  @override
-  bool operator ==(dynamic o) => o is Product && o.title == title;
-
-  @override
-  int get hashCode => title.hashCode;
 }

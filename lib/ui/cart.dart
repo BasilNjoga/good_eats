@@ -1,5 +1,4 @@
-import 'package:good_eats/models/menu_items.dart';
-import 'package:good_eats/models/product.dart';
+import 'package:good_eats/models/menu_item_response.dart';
 import 'package:mobx/mobx.dart';
 
 part 'cart.g.dart';

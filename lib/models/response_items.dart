@@ -1,4 +1,3 @@
-import 'package:good_eats/models/menu_items.dart';
 import 'package:good_eats/models/product.dart';
 
 class ResponseItems {
@@ -27,3 +26,20 @@ class ResponseItems {
   }
 }
 
+
+
+// import 'package:freezed_annotation/freezed_annotation.dart';
+// import 'package:good_eats/models/food.dart';
+
+// part 'response_items.freezed.dart';
+// part 'response_items.g.dart';
+
+// @freezed
+// class ResponseItems with _$ResponseItems{
+//   const factory ResponseItems({
+//     required String type,
+//     required List<Food> menuItem,
+//   }) = _ResponseItems;
+
+//   factory ResponseItems.fromJson(Map<String, dynamic> json) => _$ResponseItemsFromJson(json);
+// }

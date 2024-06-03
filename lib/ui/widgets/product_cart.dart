@@ -18,9 +18,9 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:good_eats/models/menu_items.dart';
-import 'package:good_eats/models/product.dart';
+import 'package:good_eats/models/menu_item_response.dart';
 import 'package:good_eats/ui/cart.dart';
+import 'package:good_eats/util/colors.dart';
 import 'package:good_eats/util/fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -42,14 +42,14 @@ class ProductCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            height: 160,
+            height: 100,
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fitWidth,
                 image: NetworkImage(product.image),
               ),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(3),
                 topLeft: Radius.circular(3),
               ),
@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     product.title,
@@ -68,18 +68,15 @@ class ProductCard extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                 ),
-                SizedBox(height: 5),
-                Container(
-                  width: double.infinity,
-                  child: Text(product.restaurantChain,
-                      style: AppFonts.productCardTDescription()),
-                ),
+                const SizedBox(height: 5),
+                Text(product.restaurantChain,
+                    style: AppFonts.productCardTDescription()),
               ],
             ),
           ),
-          Expanded(
-            child: SizedBox(),
-          ),
+          // const Expanded(
+          //   child: SizedBox(),
+          // ),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 2),
             child: Row(
@@ -87,11 +84,11 @@ class ProductCard extends StatelessWidget {
               children: <Widget>[
                 // Text('\$' + product.price.toString(),
                 //     style: AppFonts.productCardPrice()),
-                ElevatedButton(
+                MaterialButton(
                   onPressed: () => _addToCartOnClick(context),
-                  //color: AppColors.appBlue1,
-                  // shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(15)),
+                  color: AppColors.appBlue1,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
                   child: Row(
                     children: <Widget>[
                       //Icon(Icons.add_shopping_cart, color: AppColors.appWhite),
